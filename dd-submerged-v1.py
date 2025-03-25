@@ -139,6 +139,37 @@ def get_time_taken_in_seconds(start_time, end_time):
 #----------------------------------------
 
 #----------------------------------------
+# RUN 1
+#----------------------------------------
+# run 1 program
+async def run1():
+    print("RUN 1")
+
+# END RUN 1
+#----------------------------------------
+
+#----------------------------------------
+# RUN 2
+#----------------------------------------
+# run 2 program
+async def run2():
+    print("RUN 2")
+
+# END RUN 2
+#----------------------------------------
+
+#----------------------------------------
+# RUN 3
+#----------------------------------------
+# run 3 program
+async def run3():
+    print("RUN 3")
+
+# END RUN 3
+#----------------------------------------
+
+
+#----------------------------------------
 # RUN 4
 #----------------------------------------
 # run 4 program
@@ -164,28 +195,16 @@ async def run4():
     await follow_gyro_angle(kp=-1.45, ki=0, kd=0, speed=600, target_angle=0, sleep_time=0, follow_for=follow_for_distance,
             initial_position=initial_position, distance_to_cover=(degrees_for_distance(12)))
 
-
-    # raise shipping lane/seabed attachment to lift shipping lanes
-    await motor.run_for_degrees(port.C, 1350, 1100)
-
-   
-    # go forward to hook into plankton
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, degrees_for_distance(12),0,velocity=300)
-
-    # go backward to pull plankton
-    await motor_pair.move_for_degrees(motor_pair.PAIR_1, degrees_for_distance(2),0,velocity=-300)
-
-
     # turn to align to seabed sample
     await pivot_gyro_turn_abs(left_speed=300, right_speed=-300, angle=0, stop=True)
     await turnRight(8)
 
     # raise seabed sample hook to raise the sample and collect it
     # raise send over the submersible attachment
-    motor.run_for_degrees(port.C, 1200, 900)
-    await motor.run_for_degrees(port.B, 1700, -1000)
+    motor.run_for_degrees(port.D, 1200, 900)
+    await motor.run_for_degrees(port.F, 1700, -1000)
     await runloop.sleep_ms(500)
-    motor.run_for_degrees(port.C, 800, 900)
+    motor.run_for_degrees(port.D, 800, 900)
 
 # END RUN 4
 #----------------------------------------
@@ -245,7 +264,7 @@ async def execute(run_numbers=None):
                             4: run4,
                             5: run5
                         }
-    print("Start - Execute")
+    print("######## Start - Daring Drivers Runs ########")
 
     # Initialization
     # Define motor pair for robot movements
@@ -261,8 +280,8 @@ async def execute(run_numbers=None):
         await runloop.until(is_left_button_pressed)
         print("Starting Run: " + str(run_number))
 
-        light.color(light.POWER, color.MAGENTA)
-        light_matrix.show_image(light_matrix.IMAGE_BUTTERFLY)
+        light.color(light.POWER, color.GREEN)
+        light_matrix.show_image(light_matrix.IMAGE_DUCK)
 
         start_times[i] = time.ticks_ms()
         do_init()
@@ -309,7 +328,7 @@ async def execute(run_numbers=None):
 # Integrated Runs
 
 # SLOT 0 - All Runs#
-#runloop.run(execute([1, 2, 3, 4, 5]))
+runloop.run(execute([1, 2, 3, 4, 5]))
 
 # SLOT 1 - Run 2 Onwards
 # runloop.run(execute([2, 3, 4, 5]))
@@ -318,7 +337,7 @@ async def execute(run_numbers=None):
 # runloop.run(execute([3, 4, 5]))
 
 # SLOT 3 - Run 4 Onwards
-runloop.run(execute([4, 5]))
+# runloop.run(execute([4, 5]))
 
 # SLOT 4 - Run 5
- # runloop.run(execute([5]))
+# runloop.run(execute([5]))
